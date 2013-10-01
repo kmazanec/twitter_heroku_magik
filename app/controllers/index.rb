@@ -57,8 +57,13 @@ post '/send_tweet' do
 
   Twitter.configure do |config|
     config.oauth_token = user.oauth_token
+    puts config.oauth_token
     config.oauth_token_secret = user.oauth_secret
+    puts config.oauth_token_secret
   end
+
+  puts user
+  puts user.inspect
 
 
   if Twitter.update(params[:new_tweet])
