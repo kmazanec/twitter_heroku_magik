@@ -7,6 +7,12 @@
     # we should show her a form that will allow her to send a tweet. If there is no
     # user logged-in, we should show the sign-in button.
   %>
+
+  <% if @message %>
+    <h4><%= @message %></h4>
+  <% end %>
+
+
   <% if @user %>
     <div id="submit_new_tweet_container">
       <form id="post_new_tweet" action="/send_tweet" method="post">

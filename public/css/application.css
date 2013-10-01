@@ -9,3 +9,16 @@ button a {
   text-decoration: none;
   color: black;
 }
+
+#waiting {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#waiting img {
+  margin: 0 auto;
+}
+
+#post_new_tweet[disabled="disabled"] input[type="submit"] {
+  color: #aaa;
+}

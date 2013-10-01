@@ -1,4 +1,8 @@
 get '/' do
+  if session[:message]
+    @message = session[:message]
+  end
+
   erb :index
 end
 
@@ -8,6 +12,11 @@ get '/sign_in' do
 end
 
 get '/sign_out' do
+  Twitter.configure do |config|
+    config.consumer_key = ""
+    config.consumer_secret = ""
+  end
+
   session.clear
   redirect '/'
 end
@@ -20,10 +29,47 @@ get '/auth' do
 
   # at this point in the code is where you'll need to create your user account and store the access token
 
-  @user = User.find_or_create_by(oauth_token: @access_token.token,
+  @user = User.find_or_create_by(username: @access_token.params[:screen_name],
+                                oauth_token: @access_token.token,
                                 oauth_secret: @access_token.secret )
 
+  puts "=============================="
+  puts @access_token.inspect
+  puts @access_token.params[:user_id]
+  puts @access_token.params[:screen_name]
+  puts "=============================="
+
+  Twitter.configure do |config|
+    config.oauth_token = @access_token.token
+    config.oauth_token_secret = @access_token.secret
+  end
+
+  session[:user_id] = @user.id
 
   erb :index
   
+end
+
+
+post '/send_tweet' do
+
+  user = User.find(session[:user_id])
+
+  Twitter.configure do |config|
+    config.oauth_token = user.oauth_token
+    config.oauth_token_secret = user.oauth_secret
+  end
+
+
+  if Twitter.update(params[:new_tweet])
+    session[:message] = "Successfully tweeted!"
+  else
+    session[:message] = "Failed to send message"
+  end
+
+  if request.xhr?
+    session[:message]
+  else
+    redirect to '/'
+  end
 end
