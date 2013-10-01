@@ -12,10 +12,6 @@ get '/sign_in' do
 end
 
 get '/sign_out' do
-  Twitter.configure do |config|
-    config.consumer_key = ""
-    config.consumer_secret = ""
-  end
 
   session.clear
   redirect '/'
