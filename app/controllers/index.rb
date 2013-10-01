@@ -55,18 +55,19 @@ post '/send_tweet' do
 
   user = User.find(session[:user_id])
 
-  Twitter.configure do |config|
-    config.oauth_token = user.oauth_token
-    puts config.oauth_token
-    config.oauth_token_secret = user.oauth_secret
-    puts config.oauth_token_secret
-  end
+  twitter_user = Twitter::Client.new(
+    :oauth_token => user.oauth_token,
+    :oauth_token_secret => user.oauth_secret
+  )
 
   puts user
   puts user.inspect
 
+  puts twitter_user
+  puts twitter_user.inspect
 
-  if Twitter.update(params[:new_tweet])
+
+  if twitter_user.update(params[:new_tweet])
     session[:message] = "Successfully tweeted!"
   else
     session[:message] = "Failed to send message"
