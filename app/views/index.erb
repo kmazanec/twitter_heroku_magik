@@ -7,12 +7,16 @@
     # we should show her a form that will allow her to send a tweet. If there is no
     # user logged-in, we should show the sign-in button.
   %>
-  <% if @access_token %>
+  <% if @user %>
+    <div id="submit_new_tweet_container">
+      <form id="post_new_tweet" action="/send_tweet" method="post">
+        <label for="new_tweet">Enter a tweet: </label>
+        <input id="new_tweet" type="text" name="new_tweet">
+        <input type="submit">
+      </form>
+    </div>
+
     <div>
-      <p>
-        <strong>token:</strong> <%= @access_token.token %><br>
-        <strong>secret:</strong> <%= @access_token.secret %><br>
-      </p>
       <p>
         <button><a href="/sign_out">Sign Out</a></button>
       </p>

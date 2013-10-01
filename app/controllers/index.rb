@@ -20,6 +20,10 @@ get '/auth' do
 
   # at this point in the code is where you'll need to create your user account and store the access token
 
+  @user = User.find_or_create_by(oauth_token: @access_token.token,
+                                oauth_secret: @access_token.secret )
+
+
   erb :index
   
 end
