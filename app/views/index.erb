@@ -5,10 +5,14 @@
   <% if @user %>
     <div id="submit_new_tweet_container">
       <form id="post_new_tweet" action="/send_tweet" method="post">
-        <label for="new_tweet">Enter a tweet: </label>
-        <input id="new_tweet" type="text" name="new_tweet">
+        <label for="new_tweet">Enter a tweet: </label><br>
+        <input id="new_tweet" type="text" name="new_tweet"><br>
         <input type="submit">
       </form>
+    </div>
+
+    <div id="waiting" hidden>
+      <img src='tumblr_mlsnzeUwpj1rtril1o1_500.gif'>
     </div>
 
     <div id="response_message">
