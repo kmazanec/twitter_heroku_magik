@@ -18,6 +18,11 @@
   <title></title>
 </head>
 <body>
+  <nav>
+  <% if @user %>
+    <button><a href="/sign_out">Sign Out</a></button>
+  <% end %>
+  </nav>
   <%= yield %>
 </body>
 </html>

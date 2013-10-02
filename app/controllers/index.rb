@@ -1,9 +1,13 @@
 get '/' do
-  if session[:message]
-    @message = session[:message]
+  if session[:user_id]
+    @user = User.find(session[:user_id])
   end
 
-  erb :index
+  if request.xhr?
+    erb :index, layout: false
+  else
+    erb :index
+  end
 end
 
 get '/sign_in' do
@@ -35,10 +39,10 @@ get '/auth' do
   puts @access_token.params[:screen_name]
   puts "=============================="
 
-  Twitter.configure do |config|
-    config.oauth_token = @access_token.token
-    config.oauth_token_secret = @access_token.secret
-  end
+  # Twitter.configure do |config|
+  #   config.oauth_token = @access_token.token
+  #   config.oauth_token_secret = @access_token.secret
+  # end
 
   session[:user_id] = @user.id
 
@@ -56,22 +60,22 @@ post '/send_tweet' do
     :oauth_token_secret => user.oauth_secret
   )
 
-  puts user
-  puts user.inspect
-
-  puts twitter_user
-  puts twitter_user.inspect
-
-
   if twitter_user.update(params[:new_tweet])
-    session[:message] = "Successfully tweeted!"
+    message = "Successfully posted new tweet!"
   else
-    session[:message] = "Failed to send message"
+    message = "Failed to post new tweet, try again!"
   end
 
+
   if request.xhr?
-    session[:message]
+    message
   else
     redirect to '/'
   end
 end
+
+
+
+
+
+

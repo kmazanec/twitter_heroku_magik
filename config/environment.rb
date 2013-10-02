@@ -35,11 +35,11 @@ Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
 
-# twitter_keys_path = APP_ROOT.join('config', 'twitter_keys.yml')
+twitter_keys_path = APP_ROOT.join('config', 'twitter_keys.yml')
 
-# YAML.load(File.open(twitter_keys_path)).each do |key, val|
-#   ENV[key.to_s] = val
-# end
+YAML.load(File.open(twitter_keys_path)).each do |key, val|
+  ENV[key.to_s] = val
+end
 
 
 Twitter.configure do |config|

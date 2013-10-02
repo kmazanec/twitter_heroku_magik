@@ -1,8 +1,25 @@
+@media (min-width: 801px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px ) {
+  .container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    width: 95%;
+  }
+}
+
+
 .container {
   margin: 20px auto;
-  width: 600px;
   padding: 0px 20px 20px 20px;
-  border: 1px dotted black;
 }
 
 button a {
